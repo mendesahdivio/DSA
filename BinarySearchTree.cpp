@@ -136,6 +136,31 @@ vector<int> breathFirstSearch() {
 }
 
 
+//BREATH FIRST SEARCH RECURSIVE APPROACH
+vector<int> breathFirstSearchR(queue<Node*>& queueOfItems, vector<int> outPut) {
+  if (queueOfItems.size() == 0){
+    return outPut;
+  }
+
+  Node* currentNode = queueOfItems.front();
+  
+  queueOfItems.pop();
+  outPut.push_back(currentNode->data);
+  
+  if (currentNode->leftNode != NULL) {
+     queueOfItems.push(currentNode->leftNode);
+  }
+
+
+  if(currentNode->rightNode != NULL) {
+    queueOfItems.push(currentNode->rightNode);
+  }
+  
+  return breathFirstSearchR(queueOfItems, outPut);
+}
+
+
+
  private:
 Node* rootNode;
 
