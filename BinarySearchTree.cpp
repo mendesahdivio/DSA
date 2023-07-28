@@ -2,6 +2,7 @@
 #include <vector>
 #include <queue>
 using namespace std;
+void iterateThroughVector(const vector<int>& items);
 
 
 struct Node {
@@ -179,7 +180,7 @@ vector<int> breathFirstSearchR(queue<Node*>& queueOfItems, vector<int> outPut) {
 
 
 
-//MARK: - DEPTH FIRST SEARCH
+//MARK: - DEPTH FIRST SEARCH InOrder
 //returns a tree in a sorted array or list
 void depthFirstSearchInOrder(Node* node, vector<int>& nodeValues) {
   if (node->leftNode) {
@@ -192,6 +193,36 @@ void depthFirstSearchInOrder(Node* node, vector<int>& nodeValues) {
     depthFirstSearchInOrder(node->rightNode, nodeValues);
   }
 }
+
+
+
+//MARK: - DEPTH FIRST SEARCH PreOrder
+void depthFirstSearchPreOrder(Node* node, vector<int>& nodeValues) {
+  nodeValues.push_back(node->data);
+  
+  if (node->leftNode) {
+    depthFirstSearchPreOrder(node->leftNode, nodeValues);
+  }
+
+  if (node->rightNode) {
+    depthFirstSearchPreOrder(node->rightNode, nodeValues);
+  }
+}
+
+
+//MARK: - DEPTH FIRST SEARCH PostOrder
+void depthFirstSearchPostOrder(Node* node, vector<int>& nodeValues) {
+  if (node->leftNode) {
+    depthFirstSearchPostOrder(node->leftNode, nodeValues);
+  }
+
+  if (node->rightNode) {
+    depthFirstSearchPostOrder(node->rightNode, nodeValues);
+  }
+
+  nodeValues.push_back(node->data);
+}
+
 
 
 
@@ -234,9 +265,14 @@ int main() {
 
   vector<int> items = tree->breathFirstSearch();
   //cout  << val << endl
-
-  for (auto item: items) {
-    cout << item << endl;
-  }
+  iterateThroughVector(items);
   delete tree;
+}
+
+
+void iterateThroughVector(const vector<int>& items) {
+  for(const auto& item: items) {
+    cout << item << " ";
+  }
+  cout << endl;
 }
