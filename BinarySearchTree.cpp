@@ -18,14 +18,22 @@ Node(int data) {
 class BinarySearchTree {
 
 public:
-Node fecthRoot() {
-  return *rootNode;
-}
-
+//constructor
 BinarySearchTree() {
   this->rootNode = NULL;
 }
 
+
+//returns value of RootNode pointer
+Node fecthRoot() {
+  return *rootNode;
+}
+
+
+//retruns the Node pointer itself
+Node* fecthRoot() {
+  return rootNode;
+}
 
 
 //Insert Node Into The Tree 
@@ -68,6 +76,9 @@ void insert(const int& data) {
   
 }
 
+
+
+
 //LOOK UP TO FIND NODE
 bool lookUp(int data) {
   //base condition
@@ -103,6 +114,8 @@ bool lookUp(int data) {
 }
 
 
+
+
 //BREATH FIRST SEARCH
 vector<int> breathFirstSearch() {
   Node* currentNode = this->rootNode;
@@ -136,6 +149,9 @@ vector<int> breathFirstSearch() {
 }
 
 
+
+
+
 //BREATH FIRST SEARCH RECURSIVE APPROACH
 vector<int> breathFirstSearchR(queue<Node*>& queueOfItems, vector<int> outPut) {
   if (queueOfItems.size() == 0){
@@ -158,6 +174,25 @@ vector<int> breathFirstSearchR(queue<Node*>& queueOfItems, vector<int> outPut) {
   
   return breathFirstSearchR(queueOfItems, outPut);
 }
+
+
+
+
+
+//MARK: - DEPTH FIRST SEARCH
+//returns a tree in a sorted array or list
+void depthFirstSearchInOrder(Node* node, vector<int>& nodeValues) {
+  if (node->leftNode) {
+    depthFirstSearchInOrder(node->leftNode, nodeValues);
+  }
+
+  nodeValues.push_back(node->data);
+
+  if (node->rightNode) {
+    depthFirstSearchInOrder(node->rightNode, nodeValues);
+  }
+}
+
 
 
 
