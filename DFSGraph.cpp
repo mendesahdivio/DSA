@@ -10,7 +10,7 @@ so what are the things we require for the dfs
 2) we need to pass the graph adjacy list, the values vector to store the vertices, the vertice param and the did see unordered map
 */ 
 
-class GraphDFS {
+class GraphDFS{
  void UsingAdjecancyList(vector<vector<int>>& AdjecancyList, vector<int> valuesArr, int vertex, unordered_map<int, bool> isSaved) {
    //first push the vertex value inside the valuesArr
    valuesArr.push_back(vertex);
@@ -27,4 +27,19 @@ class GraphDFS {
    }
    
  }
+
+void usingAdjecancyMatrix(vector<vector<int>>& AdjecancyList, vector<int>& valuesArr, int vertex, unordered_map<int, bool>& isSaved) {
+  //save the vertex in the values
+  valuesArr.push_back(vertex);
+  isSaved[vertex] = true;
+
+  vector<int> nextVertices = AdjecancyList[vertex];
+
+  for (int i = 0; i < nextVertices.size(); i++) {
+    int nextVertex = nextVertices[i];
+    if (AdjecancyList[AdjecancyList] > 0 && !isSaved[nextVertex]) {
+      usingAdjecancyMatrix(AdjecancyList, valuesArr, nextVertex, isSaved);
+    }
+  }
+}
 };
