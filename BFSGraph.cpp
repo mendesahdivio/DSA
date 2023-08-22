@@ -9,7 +9,7 @@ template<typename Element>
 class GraphBFS {
 public:
 
-vector<Element> returnGraphBFS(vector<vector<Element>> adjacyList) {
+vector<Element> returnGraphBFSUsingAdjacencyList(vector<vector<Element>> adjacyList) {
   vector<Element> values;
   queue<Element> queueOfVertex;
   unordered_map<Element, bool> seenVertex;
@@ -42,6 +42,43 @@ vector<Element> returnGraphBFS(vector<vector<Element>> adjacyList) {
 }
 
 
+vector<Element> returnGraphFromAdjacyMatrixBFS(const vector<vector<Element>>& AdjacyMatrix) {
+  //we need the vector to hold the result
+  vector<Element> values;
+  //we need a queue since this bfs
+  queue<Element> queueOfItems;
+  //we need a map to varify which value is already traveserd in the graph
+  unordered_map<Element, bool> seenMap;
+
+  //first thing to do is push the first vertex of the graph in the queue
+  queueOfItems.push(0);
+
+
+  //now till the lenght of the queue is present loop through and keep adding the new vertices that you traverse and update the visited value in the map
+  while(queueOfItems.size()) {
+    Element currentNode = queueOfItems.front();
+    values.push_back(currentNode);
+    seenMap[currentNode] = true;
+    queueOfItems.pop();
+    
+    vector<Element> connections = AdjacyMatrix[currentNode];
+
+    //now we loop throug the items inside the connections
+    for (int v = 0; v < connections.size(); v++) {
+        if (connections[v] > 0 && !seenMap[v]) {
+          queueOfItems.push(v);
+        }
+    }
+  }
+
+  return values;
+  
+}
+
+
+
+
+
 };
 
 int main() {
@@ -58,15 +95,21 @@ int main() {
   {2}
 };
 
+  vector<vector<int>> adjacencyMatrix = {
+  {0, 1, 0, 1, 0, 0, 0, 0, 0},
+  {1, 0, 0, 0, 0, 0, 0, 0, 0},
+  {0, 0, 0, 1, 0, 0, 0, 0, 1},
+  {1, 0, 1, 0, 1, 1, 0, 0, 0},
+  {0, 0, 0, 1, 0, 0, 1, 0, 0},
+  {0, 0, 0, 1, 0, 0, 0, 0, 0},
+  {0, 0, 0, 0, 1, 0, 0, 1, 0},
+  {0, 0, 0, 0, 0, 0, 1, 0, 0},
+  {0, 0, 1, 0, 0, 0, 0, 0, 0}
+};
+
 
   unique_ptr<GraphBFS<int>> graphTraversal(new GraphBFS<int>());
 
-  vector<int> items = graphTraversal->returnGraphBFS(adjacencyList);
-
-
-  for (const auto& item: items) {
-    cout << item << " ";
-  }
-
-  cout << endl;
+  vector<int> items1 = graphTraversal->returnGraphBFSUsingAdjacencyList(adjacencyList);
+  vector<int> items2 = graphTraversal->returnGraphFromAdjacyMatrixBFS(adjacencyMatrix);
 }
